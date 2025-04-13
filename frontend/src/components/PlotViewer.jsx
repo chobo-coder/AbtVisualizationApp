@@ -14,10 +14,10 @@ export default function PlotViewer() {
       .then((res) => res.json())
       .then((data) => {
         setFiles(data.files || []);
-        console.log("✅ 가져온 파일:", data.files);
+        console.log(" 가져온 파일:", data.files);
       })
       .catch((err) => {
-        console.error("❌ fetch 에러:", err);
+        console.error(" fetch 에러:", err);
         setFiles([]);
       });
   };
@@ -38,7 +38,7 @@ export default function PlotViewer() {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <h2>📂 카테고리 이미지 목록</h2>
+      <h2 style={{ fontSize: "12px" }}>{category} 시각화 뷰어</h2>
 
       <input
         type="text"
@@ -49,17 +49,33 @@ export default function PlotViewer() {
         style={{ padding: "0.5rem", marginBottom: "1rem" }}
       />
 
-      <div>
+      <div
+        style={{
+          maxHeight: "600px",
+          overflowY: "auto",
+          border: "1px solid #ddd",
+          padding: "1rem",
+          borderRadius: "8px",
+          background: "#fafafa"
+        }}
+      >
         {files.length === 0 ? (
-          <p>⚠️ 이미지가 없습니다.</p>
+          <p> 이미지가 없습니다.</p>
         ) : (
           files.map((filename) => (
             <div key={filename} style={{ marginBottom: "1rem" }}>
               <img
                 src={`${backendBaseUrl}/images/plots/${category}/${filename}`}
                 alt={filename}
-                width="600"
-                style={{ border: "1px solid #ccc", borderRadius: "8px" }}
+                style={{
+                  display: "block",
+                  width: "100vw",        // 👉 전체 뷰포트 너비
+                  height: "auto",        // 👉 세로 비율 유지
+                  margin: 0,
+                  padding: 0,
+                  border: "none",        // (선택) 테두리 제거
+                  borderRadius: 0        // (선택) 둥근 모서리 제거
+                }}
               />
               <p style={{ fontSize: "0.8rem" }}>
                 <code>{filename}</code>
